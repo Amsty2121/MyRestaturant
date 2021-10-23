@@ -1,0 +1,17 @@
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.csproj.AssemblyReference.cache
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.AssemblyInfoInputs.cache
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.AssemblyInfo.cs
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.csproj.CoreCompileInputs.cache
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Application.deps.json
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Application.dll
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\ref\Application.dll
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Application.pdb
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Common.dll
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Domain.dll
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Common.pdb
+D:\Amdaris\Project\WebApi\Application\bin\Debug\net5.0\Domain.pdb
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.csproj.CopyComplete
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.dll
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\ref\Application.dll
+D:\Amdaris\Project\WebApi\Application\obj\Debug\net5.0\Application.pdb
