@@ -50,8 +50,7 @@ namespace Application.Tables.Commands.InsertTable
             var table = new Table()
             {
                 TableDescription = request.Dto.TableDescription,
-                TableStatusId = request.Dto.TableStatusId,
-                WaiterId = request.Dto.WaiterId,
+                TableStatus = tableStatus,
                 Waiter = waiter
                 
             };

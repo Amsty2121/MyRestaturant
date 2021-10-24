@@ -6,18 +6,10 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Dto.Ingredients;
 
 namespace Application.Ingredients.Queries.GetIngredientsList
 {
-    public class IngredientsWithStatuses
-    {
-        public int Id { get; set; }
-        public string IngredientName { get; set; }
-        public string IngredientDescription { get; set; }
-        public int IngredientStatusId { get; set; }
-        public string IngredientStatusName { get; set; }
-    }
-
     public class GetIngredientsListQuery : IRequest<IEnumerable<IngredientsWithStatuses>>
     {
 

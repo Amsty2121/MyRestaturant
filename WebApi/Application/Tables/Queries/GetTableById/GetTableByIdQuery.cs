@@ -6,20 +6,13 @@ using Domain.Exceptions;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Common.Dto.Orders;
+using Common.Dto.Tables;
 
 
 namespace Application.Tables.Queries.GetTableById
 {
-    public class TableWithStatusWaiterAndOrders
-    {
-        public int Id { get; set; }
-        public string TableDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableStatusId { get; set; }
-        public string TableStatusName { get; set; }
-        public ICollection<int> OrdersId { get; set; }
-    }
+    
     public class GetTableByIdQuery : IRequest<TableWithStatusWaiterAndOrders>
     {
         public int TableId { get; set; }

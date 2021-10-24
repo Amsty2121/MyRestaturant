@@ -1,7 +1,4 @@
-﻿using Application.Ingredients.Commands.UpdateIngredient;
-using Application.Ingredients.Queries.GetIngredientById;
-using Application.Ingredients.Queries.GetIngredientsList;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.Dto.Ingredients;
 using Domain.Entities;
 

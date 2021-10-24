@@ -76,8 +76,7 @@ namespace WebApi
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
             
             services.AddScoped(typeof(IDishUnitOfWork), typeof(DishUnitOfWork));
-            services.AddScoped(typeof(IOrderUnitOfWork), typeof(OrderUnitOfWork));
-            
+
             services.AddControllers();
             
             services.AddControllers().AddNewtonsoftJson(options =>

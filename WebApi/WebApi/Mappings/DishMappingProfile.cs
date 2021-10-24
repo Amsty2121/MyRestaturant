@@ -1,7 +1,4 @@
-﻿using Application.Dishes.Commands.UpdateDish;
-using Application.Dishes.Queries.GetDishById;
-using Application.Dishes.Queries.GetDishesList;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.Dto.Dishes;
 using Domain.Entities;
 

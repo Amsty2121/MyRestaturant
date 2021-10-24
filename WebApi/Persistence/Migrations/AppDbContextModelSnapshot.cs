@@ -321,45 +321,6 @@ namespace Persistence.Migrations
                     b.ToTable("DishIngredients");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DishOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DishId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("KitchenerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DishId");
-
-                    b.HasIndex("KitchenerId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("DishOrders");
-                });
-
             modelBuilder.Entity("Domain.Entities.DishStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -490,6 +451,12 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("KitchenerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
@@ -513,6 +480,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DishId");
+
+                    b.HasIndex("KitchenerId");
 
                     b.HasIndex("OrderStatusId");
 
@@ -770,31 +741,6 @@ namespace Persistence.Migrations
                     b.Navigation("Ingredient");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DishOrder", b =>
-                {
-                    b.HasOne("Domain.Entities.Dish", "Dish")
-                        .WithMany()
-                        .HasForeignKey("DishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Kitchener", "Kitchener")
-                        .WithMany("DishOrders")
-                        .HasForeignKey("KitchenerId");
-
-                    b.HasOne("Domain.Entities.Order", "Order")
-                        .WithOne("DishOrder")
-                        .HasForeignKey("Domain.Entities.DishOrder", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dish");
-
-                    b.Navigation("Kitchener");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Domain.Entities.Ingredient", b =>
                 {
                     b.HasOne("Domain.Entities.IngredientStatus", "IngredientStatus")
@@ -819,6 +765,16 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
+                    b.HasOne("Domain.Entities.Dish", "Dish")
+                        .WithMany("Orders")
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Kitchener", "Kitchener")
+                        .WithMany("Orders")
+                        .HasForeignKey("KitchenerId");
+
                     b.HasOne("Domain.Entities.OrderStatus", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
@@ -830,6 +786,10 @@ namespace Persistence.Migrations
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Dish");
+
+                    b.Navigation("Kitchener");
 
                     b.Navigation("OrderStatus");
 
@@ -885,6 +845,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Dish", b =>
                 {
                     b.Navigation("DishIngredients");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Domain.Entities.DishCategory", b =>
@@ -909,12 +871,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Kitchener", b =>
                 {
-                    b.Navigation("DishOrders");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Order", b =>
-                {
-                    b.Navigation("DishOrder");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderStatus", b =>

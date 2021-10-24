@@ -5,26 +5,10 @@ using Domain.Exceptions;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Dishes.Queries.GetDishesList;
 using Common.Dto.Orders;
 
 namespace Application.Orders.Commands.UpdateOrder
 {
-    public class OrderUpdating
-    {
-        public int Id { get; set; }
-        public int OrderNrPortions { get; set; }
-        public string OrderDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableId { get; set; }
-        public int OrderStatusId { get; set; }
-        public string OrderStatusName { get; set; }
-        public int DishId { get; set; }
-        public string DishName { get; set; }
-
-
-    }
     public class UpdateOrderCommand : IRequest<OrderUpdating>
     {
         public int Id { get; set; }
@@ -35,19 +19,16 @@ namespace Application.Orders.Commands.UpdateOrder
     {
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<Dish> _dishRepository;
-        private readonly IOrderUnitOfWork _orderUnitOfWork;
         private readonly IGenericRepository<OrderStatus> _orderStatusRepository;
         private readonly IGenericRepository<Table> _tableRepository;
         private readonly IGenericRepository<Waiter> _waiterRepository;
 
         public UpdateOrderCommandHandler(IGenericRepository<Dish> dishRepository,
                                          IGenericRepository<Order> orderRepository,
-                                         IOrderUnitOfWork orderUnitOfWork,
                                          IGenericRepository<OrderStatus> orderStatusRepository,
                                          IGenericRepository<Table> tableRepository,
                                          IGenericRepository<Waiter> waiterRepository)
         {
-            _orderUnitOfWork = orderUnitOfWork;
             _dishRepository = dishRepository;
             _orderRepository = orderRepository;
             _orderStatusRepository = orderStatusRepository;
@@ -57,7 +38,7 @@ namespace Application.Orders.Commands.UpdateOrder
 
         public async Task<OrderUpdating> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            Order updatedOrder = await _orderRepository.GetByIdWithInclude(request.Id, x => x.DishOrder);
+            Order updatedOrder = await _orderRepository.GetById(request.Id);
             if (updatedOrder == null)
             {
                 throw new EntityDoesNotExistException("The Order does not exist");
@@ -84,23 +65,20 @@ namespace Application.Orders.Commands.UpdateOrder
             Dish dish = await _dishRepository.GetById(request.Dto.DishId);
             if (dish == null)
             {
-                throw new EntityDoesNotExistException("The OrderStatus does not exist");
+                throw new EntityDoesNotExistException("The Dish does not exist");
             }
+            updatedOrder.DishId= dish.Id;
+            updatedOrder.Dish = dish;
 
             Waiter waiter = await _waiterRepository.GetByIdWithInclude(table.WaiterId,x=>x.UserDetails);
-
-            DishOrder dishOrder = (await _orderUnitOfWork.DishOrderRepository.GetWhere(x=>x.OrderId == request.Id)).FirstOrDefault();
-
-
-
-            dishOrder.DishId = dish.Id;
-            dishOrder.OrderId = request.Id;
+            if (waiter == null)
+            {
+                throw new EntityDoesNotExistException("The Waiter does not exist");
+            }
 
             updatedOrder.OrderDescription = request.Dto.OrderDescription;
             updatedOrder.OrderNrPortions = request.Dto.OrderNrPortions;
-            updatedOrder.DishOrder = dishOrder;
 
-            await _orderUnitOfWork.DishOrderRepository.Update(dishOrder);
             await _orderRepository.Update(updatedOrder);
 
             var orderUpdating = new OrderUpdating()
@@ -113,8 +91,8 @@ namespace Application.Orders.Commands.UpdateOrder
                 TableId = updatedOrder.TableId,
                 OrderStatusId = updatedOrder.OrderStatusId,
                 OrderStatusName = updatedOrder.OrderStatus.OrderStatusName,
-                DishId = updatedOrder.DishOrder.Dish.Id,
-                DishName = updatedOrder.DishOrder.Dish.DishName,
+                DishId = updatedOrder.Dish.Id,
+                DishName = updatedOrder.Dish.DishName,
 
             };
 

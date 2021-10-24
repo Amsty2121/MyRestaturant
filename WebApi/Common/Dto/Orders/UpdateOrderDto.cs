@@ -12,5 +12,6 @@ namespace Common.Dto.Orders
         public int TableId { get; set; }
         public int OrderStatusId { get; set; }
         public int DishId { get; set; }
+        public int? KitchenerId { get; set; }
     }
 }

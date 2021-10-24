@@ -8,15 +8,6 @@ using Common.Dto.Tables;
 
 namespace Application.Tables.Commands.UpdateTable
 {
-    public class TableUpdating
-    {
-        public int Id { get; set; }
-        public string TableDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableStatusId { get; set; }
-        public string TableStatusName { get; set; }
-    }
     public class UpdateTableCommand : IRequest<TableUpdating>
     {
         public int Id { get; set; }
@@ -26,18 +17,15 @@ namespace Application.Tables.Commands.UpdateTable
     public class UpdateTableCommandHandler : IRequestHandler<UpdateTableCommand, TableUpdating>
     {
         private readonly IGenericRepository<Table> _tableRepository;
-        private readonly IOrderUnitOfWork _orderUnitOfWork;
         private readonly IGenericRepository<TableStatus> _tableStatusRepository;
         private readonly IGenericRepository<Waiter> _waiterRepository;
         private readonly IGenericRepository<Order> _orderRepository;
 
         public UpdateTableCommandHandler(IGenericRepository<Order> orderRepository,
-                                         IOrderUnitOfWork orderUnitOfWork,
-                                         IGenericRepository<TableStatus> tableStatusRepository,
+            IGenericRepository<TableStatus> tableStatusRepository,
                                          IGenericRepository<Table> tableRepository,
                                          IGenericRepository<Waiter> waiterRepository)
         {
-            _orderUnitOfWork = orderUnitOfWork;
             _orderRepository = orderRepository;
             _tableStatusRepository = tableStatusRepository;
             _tableRepository = tableRepository;

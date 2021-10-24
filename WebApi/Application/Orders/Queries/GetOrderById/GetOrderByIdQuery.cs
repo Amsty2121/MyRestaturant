@@ -9,22 +9,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Dishes.Queries.GetDishById;
+using Common.Dto.Orders;
 
 namespace Application.Orders.Queries.GetOrderById
 {
-    public class OrderWithStatusTableAndWaiter
-    {
-        public int Id { get; set; }
-        public int OrderNrPortions { get; set; }
-        public string OrderDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableId { get; set; }
-        public int OrderStatusId { get; set; }
-        public string OrderStatusName { get; set; }
-        public int DishId { get; set; }
-        public string DishName { get; set; }
-    }
+    
     public class GetOrderByIdQuery : IRequest<OrderWithStatusTableAndWaiter>
     {
         public int OrderId { get; set; }
@@ -33,43 +22,58 @@ namespace Application.Orders.Queries.GetOrderById
     class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderWithStatusTableAndWaiter>
     {
         private readonly IGenericRepository<Order> _orderRepository;
-        private readonly IGenericRepository<DishOrder> _dishOrderRepository;
         private readonly IGenericRepository<OrderStatus> _orderStatusRepository;
         private readonly IGenericRepository<Table> _tableRepository;
         private readonly IGenericRepository<Waiter> _waiterRepository;
+        private readonly IGenericRepository<Kitchener> _kitchenerRepository;
         private readonly IGenericRepository<Dish> _dishRepository;
 
         public GetOrderByIdQueryHandler(IGenericRepository<Order> orderRepository,
-            IGenericRepository<DishOrder> dishOrderRepository,
             IGenericRepository<OrderStatus> orderStatusRepository,
             IGenericRepository<Table> tableRepository,
             IGenericRepository<Waiter> waiterRepository,
+            IGenericRepository<Kitchener> kitchenerRepository,
             IGenericRepository<Dish> dishRepository)
         {
             _orderRepository = orderRepository;
-            _dishOrderRepository = dishOrderRepository;
             _orderStatusRepository = orderStatusRepository;
             _tableRepository = tableRepository;
             _waiterRepository = waiterRepository;
+            _kitchenerRepository = kitchenerRepository;
             _dishRepository = dishRepository;
         }
 
         public async Task<OrderWithStatusTableAndWaiter> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
-            Order order = await _orderRepository.GetByIdWithInclude(request.OrderId, x => x.DishOrder);
+            Order order = await _orderRepository.GetByIdWithInclude(request.OrderId);
 
             if (order == null)
             {
                 throw new EntityDoesNotExistException("The Order does not exist");
             }
 
-            var dishOrders = (await _dishOrderRepository.GetWhere(x => x.OrderId == request.OrderId)).ToList();
 
             var orderStatus = await _orderStatusRepository.GetById(order.OrderStatusId);
             var table = await _tableRepository.GetById(order.TableId);
             var waiter = await _waiterRepository.GetByIdWithInclude(order.TableId, x => x.UserDetails);
+            
+            
+            string kitchenerName;
+            Kitchener kitchener;
+            if (order.KitchenerId != null)
+            {
 
-            var dish = await _dishRepository.GetById(dishOrders[0].DishId);
+                kitchener = await _kitchenerRepository.GetByIdWithInclude(order.KitchenerId.Value, x => x.UserDetails);
+                kitchenerName = kitchener.UserDetails.FirstName + " " + kitchener.UserDetails.LastName;
+            }
+            else
+            {
+                order.KitchenerId = null;
+                kitchenerName = null;
+            }
+
+
+            var dish = await _dishRepository.GetById(order.DishId);
 
 
 
@@ -84,7 +88,9 @@ namespace Application.Orders.Queries.GetOrderById
                 OrderStatusId = orderStatus.Id,
                 OrderStatusName = orderStatus.OrderStatusName,
                 DishId = dish.Id,
-                DishName = dish.DishName
+                DishName = dish.DishName,
+                KitchenerId = order.KitchenerId,
+                KitchenerName = kitchenerName,
             };
 
             return orderWithStatusTableAndWaiter;

@@ -45,13 +45,13 @@ namespace WebApi.Controllers
         {
             GetKitchenerByIdQuery query = new GetKitchenerByIdQuery() { KitchenerId = kitchenerId };
 
-            KitchenerWithDishesAndOrders kitchener = await _mediator.Send(query);
+            KitchenerWithOrders kitchener = await _mediator.Send(query);
             var result = _mapper.Map<GetKitchenerDto>(kitchener);
 
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> RegisterKitchener(InsertKitchenerDto dto)
         {
@@ -66,12 +66,12 @@ namespace WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpPatch("{kitchenerId}")]
-        public async Task<IActionResult> AssignKitchenerToOrder(int kitchenerId, AssignKitchenerToDIshOrderDto dto)
+        [HttpPatch("{orderId}")]
+        public async Task<IActionResult> AssignKitchenerToOrder(int orderId, AssignKitchenerToDIshOrderDto dto)
         {
             AssignKitchenerToDIshOrderCommand command = new AssignKitchenerToDIshOrderCommand()
             {
-                KitchenerId = kitchenerId,
+                OrderId = orderId,
                 Dto = dto
             };
             var order = await _mediator.Send(command);

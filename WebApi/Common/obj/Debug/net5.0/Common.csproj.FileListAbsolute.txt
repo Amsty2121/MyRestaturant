@@ -10,3 +10,15 @@ D:\Amdaris\Project\WebApi\Common\obj\Debug\net5.0\Common.csproj.CoreCompileInput
 D:\Amdaris\Project\WebApi\Common\obj\Debug\net5.0\Common.dll
 D:\Amdaris\Project\WebApi\Common\obj\Debug\net5.0\ref\Common.dll
 D:\Amdaris\Project\WebApi\Common\obj\Debug\net5.0\Common.pdb
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.deps.json
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.dll
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\ref\Common.dll
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.pdb
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.AssemblyReference.cache
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.AssemblyInfoInputs.cache
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.AssemblyInfo.cs
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.CoreCompileInputs.cache
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.dll
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\ref\Common.dll
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.pdb

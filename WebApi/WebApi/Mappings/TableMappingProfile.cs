@@ -1,7 +1,4 @@
-﻿using Application.Tables.Commands.UpdateTable;
-using Application.Tables.Queries.GetTableById;
-using Application.Tables.Queries.GetTableList;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.Dto.Tables;
 using Domain.Entities;
 

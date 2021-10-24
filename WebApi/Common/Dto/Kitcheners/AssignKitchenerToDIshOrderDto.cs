@@ -2,6 +2,6 @@
 {
     public class AssignKitchenerToDIshOrderDto
     {
-        public int OrderId { get; set; }
+        public int KitchenerId { get; set; }
     }
 }

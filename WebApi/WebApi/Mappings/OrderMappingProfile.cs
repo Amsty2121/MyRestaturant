@@ -1,7 +1,4 @@
-﻿using Application.Orders.Commands.UpdateOrder;
-using Application.Orders.Queries.GetOrderById;
-using Application.Orders.Queries.GetOrdersList;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.Dto.Orders;
 using Domain.Entities;
 
@@ -13,7 +10,7 @@ namespace WebApi.Mappings
         {
             CreateMap<OrdersWithStatusesTablesAndWaiters, GetOrderListDto>();
             CreateMap<Order, GetOrderDto>();
-            CreateMap<OrdersWithStatusesTablesAndWaiters, GetOrderDto>();
+            CreateMap<OrderWithStatusTableAndWaiter, GetOrderDto>();
             CreateMap<Order, InsertedOrderDto>();
             CreateMap<Order, InsertOrderDto>();
             CreateMap<OrderUpdating, UpdatedOrderDto>();

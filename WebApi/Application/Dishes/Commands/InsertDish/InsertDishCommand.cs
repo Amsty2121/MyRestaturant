@@ -79,9 +79,9 @@ namespace Application.Dishes.Commands.InsertDish
             {
                 DishName = request.Dto.DishName,
                 DishDescription = request.Dto.DishDescription,
-                DishStatusId = request.Dto.DishStatusId,
+                DishStatus = dishStatus,
                 DishPrice = request.Dto.DishPrice,
-                DishCategoryId = request.Dto.DishCategoryId,
+                DishCategory = dishCategory,
                 DishIngredients = dishIngredients
             };
 

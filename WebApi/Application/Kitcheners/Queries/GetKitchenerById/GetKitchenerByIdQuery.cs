@@ -9,58 +9,55 @@ using System.Threading.Tasks;
 
 namespace Application.Kitcheners.Queries.GetKitchenerById
 {
-    public class KitchenerWithDishesAndOrders
+    public class KitchenerWithOrders
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public ICollection<int> DishOrdersId { get; set; }
+        public ICollection<int> OrdersId { get; set; }
 
 }
 
-    public class GetKitchenerByIdQuery : IRequest<KitchenerWithDishesAndOrders>
+    public class GetKitchenerByIdQuery : IRequest<KitchenerWithOrders>
     {
         public int KitchenerId { get; set; }
     }
 
-    public class GetKitchenerByIdQueryHandler : IRequestHandler<GetKitchenerByIdQuery, KitchenerWithDishesAndOrders>
+    public class GetKitchenerByIdQueryHandler : IRequestHandler<GetKitchenerByIdQuery, KitchenerWithOrders>
     {
         private readonly IGenericRepository<Kitchener> _kitchenerRepository;
-        private readonly IGenericRepository<DishOrder> _dishOrderRepository;
         private readonly IGenericRepository<Dish> _dishRepository;
         private readonly IGenericRepository<Order> _orderRepository;
 
         public GetKitchenerByIdQueryHandler(IGenericRepository<Kitchener> kitchenerRepository,
-                                         IGenericRepository<DishOrder> dishOrderRepository,
-                                         IGenericRepository<Dish> dishRepository,
+            IGenericRepository<Dish> dishRepository,
                                          IGenericRepository<Order> orderRepository)
         {
             _kitchenerRepository = kitchenerRepository;
             _dishRepository = dishRepository;
             _orderRepository = orderRepository;
-            _dishOrderRepository = dishOrderRepository;
         }
 
-        public async Task<KitchenerWithDishesAndOrders> Handle(GetKitchenerByIdQuery request, CancellationToken cancellationToken)
+        public async Task<KitchenerWithOrders> Handle(GetKitchenerByIdQuery request, CancellationToken cancellationToken)
         {
-            Kitchener kitchener = await _kitchenerRepository.GetByIdWithInclude(request.KitchenerId, x => x.UserDetails, x=>x.DishOrders);
+            Kitchener kitchener = await _kitchenerRepository.GetByIdWithInclude(request.KitchenerId, x => x.UserDetails);
             if (kitchener == null)
             {
                 throw new EntityDoesNotExistException("The Kitchener does not exist");
             }
 
-            var dishOrders = (await _dishOrderRepository.GetWhere(x => x.KitchenerId == kitchener.Id)).ToList();
+            var orders = (await _orderRepository.GetWhere(x => x.KitchenerId == kitchener.Id)).ToList();
 
 
-            var kitchenerWithDishesAndOrders = new KitchenerWithDishesAndOrders()
+            var kitchenerWithOrders = new KitchenerWithOrders()
             {
                 Id = kitchener.Id,
                 FirstName = kitchener.UserDetails.FirstName,
-                LastName = kitchener.UserDetails.LastName,
-                DishOrdersId = dishOrders.Select(x=>x.Id).ToList()
+                LastName = kitchener.UserDetails.LastName, 
+                OrdersId = orders.Select(x=>x.Id).ToList()
             };
 
-            return kitchenerWithDishesAndOrders;
+            return kitchenerWithOrders;
         }
     }
 }

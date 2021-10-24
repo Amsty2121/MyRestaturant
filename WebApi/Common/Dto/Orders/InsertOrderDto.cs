@@ -10,8 +10,9 @@ namespace Common.Dto.Orders
 
         [StringLength(500, MinimumLength = 0, ErrorMessage = "Invalid OrderDescription length")]
         public string OrderDescription { get; set; }
+        public int DishId { get; set; }
         public int TableId { get; set; }
         public int OrderStatusId { get; set; }
-        public int DishId { get; set; }
+        
     }
 }

@@ -39,7 +39,6 @@ namespace Persistence
         public DbSet<DishCategory> DishCategories { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<DishIngredient> DishIngredients { get; set; }
-        public DbSet<DishOrder> DishOrders { get; set; }
 
         private void ApplyIdentityMapConfiguration(ModelBuilder modelBuilder)
         {

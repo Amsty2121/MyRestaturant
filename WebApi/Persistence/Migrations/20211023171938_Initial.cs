@@ -444,6 +444,8 @@ namespace Persistence.Migrations
                     OrderDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     TableId = table.Column<int>(type: "int", nullable: false),
+                    DishId = table.Column<int>(type: "int", nullable: false),
+                    KitchenerId = table.Column<int>(type: "int", nullable: true),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
@@ -451,6 +453,18 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Dishes_DishId",
+                        column: x => x.DishId,
+                        principalTable: "Dishes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Kitchener_KitchenerId",
+                        column: x => x.KitchenerId,
+                        principalTable: "Kitchener",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_OrderStatuses_OrderStatusId",
                         column: x => x.OrderStatusId,
@@ -461,42 +475,6 @@ namespace Persistence.Migrations
                         name: "FK_Orders_Tables_TableId",
                         column: x => x.TableId,
                         principalTable: "Tables",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DishOrders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DishId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    KitchenerId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DishOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DishOrders_Dishes_DishId",
-                        column: x => x.DishId,
-                        principalTable: "Dishes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DishOrders_Kitchener_KitchenerId",
-                        column: x => x.KitchenerId,
-                        principalTable: "Kitchener",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DishOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -517,22 +495,6 @@ namespace Persistence.Migrations
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DishOrders_DishId",
-                table: "DishOrders",
-                column: "DishId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DishOrders_KitchenerId",
-                table: "DishOrders",
-                column: "KitchenerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DishOrders_OrderId",
-                table: "DishOrders",
-                column: "OrderId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_IngredientStatusId",
                 table: "Ingredients",
                 column: "IngredientStatusId");
@@ -542,6 +504,16 @@ namespace Persistence.Migrations
                 table: "Kitchener",
                 column: "UserDetailsId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_DishId",
+                table: "Orders",
+                column: "DishId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_KitchenerId",
+                table: "Orders",
+                column: "KitchenerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_OrderStatusId",
@@ -628,7 +600,7 @@ namespace Persistence.Migrations
                 name: "DishIngredients");
 
             migrationBuilder.DropTable(
-                name: "DishOrders");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims",
@@ -660,7 +632,10 @@ namespace Persistence.Migrations
                 name: "Kitchener");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrderStatuses");
+
+            migrationBuilder.DropTable(
+                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "Roles",
@@ -674,12 +649,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "DishStatuses");
-
-            migrationBuilder.DropTable(
-                name: "OrderStatuses");
-
-            migrationBuilder.DropTable(
-                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "TableStatuses");

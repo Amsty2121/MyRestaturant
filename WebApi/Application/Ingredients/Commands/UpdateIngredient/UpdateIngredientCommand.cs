@@ -8,15 +8,6 @@ using Common.Dto.Ingredients;
 
 namespace Application.Ingredients.Commands.UpdateIngredient
 {
-    public class IngredientStatusUpdating
-    {
-        public int Id { get; set; }
-        public string IngredientName { get; set; }
-        public string IngredientDescription { get; set; }
-        public int IngredientStatusId { get; set; }
-        public string IngredientStatusName { get; set; }
-    }
-
     public class UpdateIngredientCommand : IRequest<IngredientStatusUpdating>
     {
         public int Id { get; set; }

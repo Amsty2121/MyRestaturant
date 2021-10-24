@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Amdaris\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj": {}
+    "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Amdaris\\Project\\WebApi\\Application\\Application.csproj": {
+    "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Amdaris\\Project\\WebApi\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\Amdaris\\Project\\WebApi\\Application\\Application.csproj",
+        "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\dimASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Amdaris\\Project\\WebApi\\Application\\obj\\",
+        "outputPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -34,11 +34,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj": {
-                "projectPath": "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj"
+              "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj": {
+                "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj"
               },
-              "D:\\Amdaris\\Project\\WebApi\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\Amdaris\\Project\\WebApi\\Domain\\Domain.csproj"
+              "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj"
               }
             }
           }
@@ -89,14 +89,14 @@
         }
       }
     },
-    "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj": {
+    "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj",
+        "projectUniqueName": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj",
+        "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj",
         "packagesPath": "C:\\Users\\dimASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Amdaris\\Project\\WebApi\\Common\\obj\\",
+        "outputPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -149,14 +149,14 @@
         }
       }
     },
-    "D:\\Amdaris\\Project\\WebApi\\Domain\\Domain.csproj": {
+    "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Amdaris\\Project\\WebApi\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\Amdaris\\Project\\WebApi\\Domain\\Domain.csproj",
+        "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\dimASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Amdaris\\Project\\WebApi\\Domain\\obj\\",
+        "outputPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -215,14 +215,14 @@
         }
       }
     },
-    "D:\\Amdaris\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Amdaris\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\Amdaris\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\dimASUS\\.nuget\\packages\\",
-        "outputPath": "D:\\Amdaris\\Project\\WebApi\\Infrastructure\\obj\\",
+        "outputPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -245,11 +245,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Amdaris\\Project\\WebApi\\Application\\Application.csproj": {
-                "projectPath": "D:\\Amdaris\\Project\\WebApi\\Application\\Application.csproj"
+              "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj": {
+                "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj"
               },
-              "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj": {
-                "projectPath": "D:\\Amdaris\\Project\\WebApi\\Common\\Common.csproj"
+              "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj": {
+                "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj"
               }
             }
           }

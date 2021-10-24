@@ -10,6 +10,6 @@ namespace Domain.Entities
     {
         public int UserDetailsId { get; set; }
         public UserDetails UserDetails { get; set; }
-        public ICollection<DishOrder> DishOrders { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -5,18 +5,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Ingredients.Queries.GetIngredientsList;
+using Common.Dto.Tables;
 
 namespace Application.Tables.Queries.GetTableList
 {
-    public class TablesWithStatusesAndWaiters
-    {
-        public int Id { get; set; }
-        public string TableDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableStatusId { get; set; }
-        public string TableStatusName { get; set; }
-    }
     public class GetTablesListQuery : IRequest<IEnumerable<TablesWithStatusesAndWaiters>>
     {
     }

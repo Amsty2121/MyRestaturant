@@ -44,7 +44,7 @@ namespace Application.Ingredients.Commands.InsertIngredient
             {
                 IngredientName = request.Dto.IngredientName,
                 IngredientDescription = request.Dto.IngredientDescription,
-                IngredientStatusId = request.Dto.IngredientStatusId,
+                IngredientStatus = ingredientStatus
             };
 
             await _ingredientRepository.Add(ingredient);
