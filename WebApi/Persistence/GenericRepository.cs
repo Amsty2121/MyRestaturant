@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Persistence.Extensions;
 
 namespace Persistence
 {
@@ -94,9 +95,9 @@ namespace Persistence
 			return entities;
 		}
 
-		/*public async Task<PaginatedResult<T>> GetPagedData<T>(PagedRequest pagedRequest) where T : BaseEntity
+		public async Task<PaginatedResult<T>> GetPagedData<T>(PagedRequest pagedRequest) where T : BaseEntity
 		{
 			return await _context.Set<T>().CreatePaginatedResultAsync<T>(pagedRequest);
-		}*/
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
@@ -66,15 +67,6 @@ namespace Application.Dishes.Commands.InsertDish
                 ingredients.Add(newIngredient);
             }
 
-            var dishIngredients = new List<DishIngredient>();
-
-            foreach (var ingredient in ingredients)
-            {
-                var newDishIngredient = new DishIngredient() { IngredientId = ingredient.Id, };
-
-                dishIngredients.Add(newDishIngredient);
-            }
-
             dish = new Dish()
             {
                 DishName = request.Dto.DishName,
@@ -82,7 +74,7 @@ namespace Application.Dishes.Commands.InsertDish
                 DishStatus = dishStatus,
                 DishPrice = request.Dto.DishPrice,
                 DishCategory = dishCategory,
-                DishIngredients = dishIngredients
+                Ingredients = ingredients
             };
 
             await _dishRepository.Add(dish);

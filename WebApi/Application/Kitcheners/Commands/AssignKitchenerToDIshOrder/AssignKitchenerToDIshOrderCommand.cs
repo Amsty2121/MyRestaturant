@@ -9,30 +9,13 @@ using MediatR;
 
 namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
 {
-    public class AssignedKitchenerToDishOrder
-    {
-        public int Id { get; set; }
-        public int OrderNrPortions { get; set; }
-        public string OrderDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableId { get; set; }
-        public int OrderStatusId { get; set; }
-        public string OrderStatusName { get; set; }
-        public int DishId { get; set; }
-        public string DishName { get; set; }
-        public int KitchenerId { get; set; }
-        public string KitchenerName { get; set; }
-
-
-    }
-    public class AssignKitchenerToDIshOrderCommand : IRequest<AssignedKitchenerToDishOrder>
+    public class AssignKitchenerToDIshOrderCommand : IRequest<AssignedKitchenerToDIshOrderDto>
     {
         public int OrderId { get; set; }
         public AssignKitchenerToDIshOrderDto Dto { get; set; }
     }
 
-    public class AssignKitchenerToDIshOrderCommandHandler : IRequestHandler<AssignKitchenerToDIshOrderCommand, AssignedKitchenerToDishOrder>
+    public class AssignKitchenerToDIshOrderCommandHandler : IRequestHandler<AssignKitchenerToDIshOrderCommand, AssignedKitchenerToDIshOrderDto>
     {
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<Dish> _dishRepository;
@@ -56,7 +39,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
             _kitchenerRepository = kitchenerRepository;
         }
 
-        public async Task<AssignedKitchenerToDishOrder> Handle(AssignKitchenerToDIshOrderCommand request, CancellationToken cancellationToken)
+        public async Task<AssignedKitchenerToDIshOrderDto> Handle(AssignKitchenerToDIshOrderCommand request, CancellationToken cancellationToken)
         {
             Kitchener kitchener = await _kitchenerRepository.GetByIdWithInclude(request.Dto.KitchenerId,x=>x.UserDetails);
             if (kitchener == null)
@@ -92,7 +75,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
 
             await _orderRepository.Update(updatedOrder);
 
-            var assignedKitchenerToDishOrder = new AssignedKitchenerToDishOrder()
+            var assignedKitchenerToDishOrder = new AssignedKitchenerToDIshOrderDto()
             {
                 Id = updatedOrder.Id,
                 OrderNrPortions = updatedOrder.OrderNrPortions,

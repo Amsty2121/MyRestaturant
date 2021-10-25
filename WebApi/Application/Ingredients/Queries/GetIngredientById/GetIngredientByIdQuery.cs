@@ -8,12 +8,12 @@ using Common.Dto.Ingredients;
 
 namespace Application.Ingredients.Queries.GetIngredientById
 {
-    public class GetIngredientByIdQuery : IRequest<IngredientWithStatus>
+    public class GetIngredientByIdQuery : IRequest<GetIngredientDto>
     {
         public int IngredientId { get; set; }
     }
 
-    public class GetIngredientByIdQueryHandler : IRequestHandler<GetIngredientByIdQuery, IngredientWithStatus>
+    public class GetIngredientByIdQueryHandler : IRequestHandler<GetIngredientByIdQuery, GetIngredientDto>
     {
         private readonly IGenericRepository<Ingredient> _ingredientRepository;
         private readonly IGenericRepository<IngredientStatus> _ingredientStatusRepository;
@@ -24,7 +24,7 @@ namespace Application.Ingredients.Queries.GetIngredientById
             _ingredientStatusRepository = ingredientStatusRepository;
         }
 
-        public async Task<IngredientWithStatus> Handle(GetIngredientByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetIngredientDto> Handle(GetIngredientByIdQuery request, CancellationToken cancellationToken)
         {
             Ingredient ingredient = await _ingredientRepository.GetByIdWithInclude(request.IngredientId, x => x.IngredientStatus);
 
@@ -34,17 +34,23 @@ namespace Application.Ingredients.Queries.GetIngredientById
             }
 
             IngredientStatus ingredientStatus = await _ingredientStatusRepository.GetById(ingredient.IngredientStatusId);
+            
+            if (ingredientStatus == null)
+            {
+                throw new EntityDoesNotExistException("The IngredientStatus does not exist");
+            }
 
-            IngredientWithStatus ingredientWithStatus = new IngredientWithStatus()
+            GetIngredientDto getIngredientDto = new GetIngredientDto()
             {
                 Id = ingredient.Id,
                 IngredientName = ingredient.IngredientName,
                 IngredientDescription = ingredient.IngredientDescription,
-                IngredientStatusId = ingredient.IngredientStatusId,
+                IngredientStatusId = ingredientStatus.Id,
                 IngredientStatusName = ingredientStatus.IngredientStatusName
+
             };
 
-            return ingredientWithStatus;
+            return getIngredientDto;
         }
     }
 }

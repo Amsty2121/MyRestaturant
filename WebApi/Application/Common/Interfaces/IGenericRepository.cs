@@ -25,6 +25,6 @@ namespace Application.Common.Interfaces
         Task<T> GetByIdWithInclude(int id, params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> GetAllWithInclude(params Expression<Func<T, object>>[] includeProperties);
 
-        //Task<PaginatedResult<T>> GetPagedData<T>(PagedRequest pagedRequest) where T : BaseEntity;
+        Task<PaginatedResult<T>> GetPagedData<T>(PagedRequest pagedRequest) where T : BaseEntity;
     }
 }

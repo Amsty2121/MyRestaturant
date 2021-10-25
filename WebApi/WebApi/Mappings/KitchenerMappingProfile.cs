@@ -36,8 +36,6 @@ namespace WebApi.Mappings
 
             CreateMap<GetKitchenerDto, KitchenerWithOrders>();
             CreateMap<KitchenerWithOrders,GetKitchenerDto >();
-            CreateMap<AssignedKitchenerToDIshOrderDto, AssignedKitchenerToDishOrder> (); 
-            CreateMap<AssignedKitchenerToDishOrder, AssignedKitchenerToDIshOrderDto > ();
         }
     }
 }

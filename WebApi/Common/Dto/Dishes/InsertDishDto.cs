@@ -13,7 +13,6 @@ namespace Common.Dto.Dishes
         [Range(1, 1000000)]
         public int DishPrice { get; set; }
 
-		[Required]
 		[StringLength(500, MinimumLength = 0, ErrorMessage = "Invalid DishDescription length")]
         public string DishDescription { get; set; }
         public int DishStatusId { get; set; }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.Dto.Ingredients;
+using Common.Models.PagedRequest;
 using Domain.Entities;
 
 namespace WebApi.Mappings
@@ -8,13 +9,19 @@ namespace WebApi.Mappings
     {
         public IngredientMappingProfile()
         {
-            CreateMap<IngredientsWithStatuses, GetIngredientListDto>();
-            CreateMap<IngredientWithStatus, GetIngredientDto>();
             CreateMap<Ingredient, GetIngredientDto>();
-            CreateMap<Ingredient, InsertedIngredientDto>();
+            CreateMap< GetIngredientDto, Ingredient>();
+            CreateMap<Ingredient, GetIngredientListDto>();
+
             CreateMap<Ingredient, InsertIngredientDto>();
-            CreateMap<IngredientStatusUpdating, UpdatedIngredientDto>();
+            CreateMap<Ingredient, InsertedIngredientDto>();
+            
+            CreateMap<Ingredient, UpdatedIngredientDto>();
             CreateMap<Ingredient, UpdateIngredientDto>();
+
+            CreateMap<Ingredient, GetIngredientPagedDto>();
+            CreateMap<PaginatedResult<Ingredient>, PaginatedResult<GetIngredientPagedDto>>()
+                .ForMember(x => x.Items, y => y.MapFrom(z => z.Items));
         }
         
     }

@@ -8,13 +8,13 @@ using Common.Dto.Ingredients;
 
 namespace Application.Ingredients.Commands.UpdateIngredient
 {
-    public class UpdateIngredientCommand : IRequest<IngredientStatusUpdating>
+    public class UpdateIngredientCommand : IRequest<Ingredient>
     {
         public int Id { get; set; }
         public UpdateIngredientDto Dto { get; set; }
     }
 
-    public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCommand, IngredientStatusUpdating>
+    public class UpdateIngredientCommandHandler : IRequestHandler<UpdateIngredientCommand, Ingredient>
     {
         private readonly IGenericRepository<Ingredient> _ingredientRepository;
         private readonly IGenericRepository<IngredientStatus> _ingredientStatusRepository;
@@ -25,13 +25,11 @@ namespace Application.Ingredients.Commands.UpdateIngredient
             _ingredientStatusRepository = ingredientStatusRepository;
         }
 
-        public async Task<IngredientStatusUpdating> Handle(UpdateIngredientCommand request,
+        public async Task<Ingredient> Handle(UpdateIngredientCommand request,
             CancellationToken cancellationToken)
         {
             Ingredient updatedIngredient =
-                await _ingredientRepository.GetByIdWithInclude(request.Id, x => x.IngredientStatus,
-                    x => x.DishIngredients);
-
+                await _ingredientRepository.GetById(request.Id);
             if (updatedIngredient == null)
             {
                 throw new EntityDoesNotExistException("The Ingredient does not exist");
@@ -59,16 +57,7 @@ namespace Application.Ingredients.Commands.UpdateIngredient
 
             await _ingredientRepository.Update(updatedIngredient);
 
-            IngredientStatusUpdating ingredientStatusUpdating = new IngredientStatusUpdating()
-            {
-                Id = updatedIngredient.Id,
-                IngredientName = updatedIngredient.IngredientName,
-                IngredientDescription = updatedIngredient.IngredientDescription,
-                IngredientStatusId = updatedIngredient.IngredientStatusId,
-                IngredientStatusName = updatedIngredient.IngredientStatus.IngredientStatusName
-            };
-
-            return ingredientStatusUpdating;
+            return updatedIngredient;
         }
     }
 }

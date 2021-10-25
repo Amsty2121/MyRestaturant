@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Common.Dto.Dishes;
+using Common.Dto.Ingredients;
+using Common.Models.PagedRequest;
 using Domain.Entities;
 
 namespace WebApi.Mappings
@@ -8,13 +10,18 @@ namespace WebApi.Mappings
     {
         public DishMappingProfile()
         {
-            CreateMap<DishesWithStatusesAndCategories, GetDishListDto>();
             CreateMap<Dish, GetDishDto>();
-            CreateMap<DishWithStatusAndCategory,GetDishDto > ();
-            CreateMap<Dish, InsertedDishDto>();
+            CreateMap<Dish, GetDishListDto>();
+
             CreateMap<Dish, InsertDishDto>();
-            CreateMap<DishUpdating, UpdatedDishDto>();
+            CreateMap<Dish, InsertedDishDto>();
+
             CreateMap<Dish, UpdateDishDto>();
+            CreateMap<Dish, UpdatedDishDto>();
+
+            CreateMap<Dish, GetDishPagedDto>();
+            CreateMap<PaginatedResult<Dish>, PaginatedResult<GetDishPagedDto>>()
+                .ForMember(x => x.Items, y => y.MapFrom(z => z.Items));
         }
 
     }

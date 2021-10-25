@@ -332,29 +332,24 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DishIngredients",
+                name: "DishIngredient",
                 columns: table => new
                 {
-                    DishId = table.Column<int>(type: "int", nullable: false),
-                    IngredientId = table.Column<int>(type: "int", nullable: false),
-                    DishIngredientDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                    DishesId = table.Column<int>(type: "int", nullable: false),
+                    IngredientsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DishIngredients", x => new { x.DishId, x.IngredientId });
+                    table.PrimaryKey("PK_DishIngredient", x => new { x.DishesId, x.IngredientsId });
                     table.ForeignKey(
-                        name: "FK_DishIngredients_Dishes_DishId",
-                        column: x => x.DishId,
+                        name: "FK_DishIngredient_Dishes_DishesId",
+                        column: x => x.DishesId,
                         principalTable: "Dishes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DishIngredients_Ingredients_IngredientId",
-                        column: x => x.IngredientId,
+                        name: "FK_DishIngredient_Ingredients_IngredientsId",
+                        column: x => x.IngredientsId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -490,9 +485,9 @@ namespace Persistence.Migrations
                 column: "DishStatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DishIngredients_IngredientId",
-                table: "DishIngredients",
-                column: "IngredientId");
+                name: "IX_DishIngredient_IngredientsId",
+                table: "DishIngredient",
+                column: "IngredientsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_IngredientStatusId",
@@ -597,7 +592,7 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DishIngredients");
+                name: "DishIngredient");
 
             migrationBuilder.DropTable(
                 name: "Orders");

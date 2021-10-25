@@ -7,8 +7,13 @@ using Application.Ingredients.Commands.DeleteIngredient;
 using Application.Ingredients.Commands.InsertIngredient;
 using Application.Ingredients.Commands.UpdateIngredient;
 using Application.Ingredients.Queries.GetIngredientById;
+using Application.Ingredients.Queries.GetIngredientPaged;
 using Application.Ingredients.Queries.GetIngredientsList;
+using Application.IngredientStatuses.Queries.GetStatusByIngredientId;
 using Common.Dto.Ingredients;
+using Common.Dto.IngredientStatuses;
+using Common.Models.PagedRequest;
+using Domain.Entities;
 
 namespace WebApi.Controllers
 {
@@ -30,7 +35,7 @@ namespace WebApi.Controllers
         {
 
             var ingredients = await _mediator.Send(new GetIngredientsListQuery());
-            var results = ingredients.Select(x => _mapper.Map<IngredientsWithStatuses>(x));
+            var results = ingredients.Select(x => _mapper.Map<GetIngredientListDto>(x));
 
             return Ok(results);
         }
@@ -39,11 +44,27 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetIngredientById(int ingredientId)
         {
             var queryIngredient = new GetIngredientByIdQuery() { IngredientId = ingredientId };
-            IngredientWithStatus ingredientWithStatus = await _mediator.Send(queryIngredient);
+            var ingredientWithStatus = await _mediator.Send(queryIngredient);
 
             var result = _mapper.Map<GetIngredientDto>(ingredientWithStatus);
 
             return Ok(result);
+        }
+
+        //[Authorize(Roles = "admin")]
+        [HttpPost("paginated-search")]
+        public async Task<IActionResult> GetIngredientsPaged([FromBody] PagedRequest pagedRequest)
+        {
+            var query = new GetIngredientsPagedQuery() { PagedRequest = pagedRequest };
+            var ingredients = await _mediator.Send(query);
+            var ingredientsResult = _mapper.Map<PaginatedResult<GetIngredientPagedDto>>(ingredients);
+
+            foreach (var ingredient in ingredientsResult.Items)
+            {
+                ingredient.IngredientStatus = (await _mediator.Send(new GetStatusByIngredientIdQuery() { IngredientId = ingredient.Id}));
+            }
+
+            return Ok(ingredientsResult);
         }
 
         [HttpPost]

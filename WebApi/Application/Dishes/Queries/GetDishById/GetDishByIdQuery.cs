@@ -11,41 +11,39 @@ using System.Threading.Tasks;
 
 namespace Application.Dishes.Queries.GetDishById
 {
-    public class GetDishByIdQuery : IRequest<DishWithStatusAndCategory>
+    public class GetDishByIdQuery : IRequest<GetDishDto>
     {
         public int DishId { get; set; }
     }
 
-    class GetDishByIdQueryHandler : IRequestHandler<GetDishByIdQuery, DishWithStatusAndCategory>
+    class GetDishByIdQueryHandler : IRequestHandler<GetDishByIdQuery, GetDishDto>
     {
         private readonly IGenericRepository<Dish> _dishRepository;
-        private readonly IGenericRepository<DishIngredient> _dishIngredientRepository;
+        private readonly IGenericRepository<Ingredient> _ingredientRepository;
         private readonly IGenericRepository<DishStatus> _dishStatusRepository;
         private readonly IGenericRepository<DishCategory> _dishCategoryRepository;
         public GetDishByIdQueryHandler(IGenericRepository<Dish> dishRepository,
-                                         IGenericRepository<DishIngredient> dishIngredientRepository,
+                                         IGenericRepository<Ingredient> ingredientRepository,
                                          IGenericRepository<DishStatus> dishStatusRepository,
                                          IGenericRepository<DishCategory> dishCategoryRepository)
         {
             _dishRepository = dishRepository;
-            _dishIngredientRepository = dishIngredientRepository;
+            _ingredientRepository = ingredientRepository;
             _dishStatusRepository = dishStatusRepository;
             _dishCategoryRepository = dishCategoryRepository;
         }
-        public async Task<DishWithStatusAndCategory> Handle(GetDishByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetDishDto> Handle(GetDishByIdQuery request, CancellationToken cancellationToken)
         {
-            Dish dish = await _dishRepository.GetByIdWithInclude(request.DishId, x => x.DishIngredients);
+            Dish dish = await _dishRepository.GetByIdWithInclude(request.DishId, x => x.Ingredients);
             if (dish == null)
             {
                 throw new EntityDoesNotExistException("The Dish does not exist");
             }
 
-            var dishIngredients = (await _dishIngredientRepository.GetWhere(x => x.DishId == request.DishId)).ToList();
-
             var dishStatus = await _dishStatusRepository.GetById(dish.DishStatusId);
             var dishCategory = await _dishCategoryRepository.GetById(dish.DishCategoryId);
 
-            var dishWithStatusAndCategory = new DishWithStatusAndCategory()
+            var getDishDto = new GetDishDto()
             {
                 Id = dish.Id,
                 DishDescription = dish.DishDescription,
@@ -55,11 +53,10 @@ namespace Application.Dishes.Queries.GetDishById
                 DishStatusId = dish.DishStatusId,
                 DishCategoryName = dishCategory.DishCategoryName,
                 DishStatusName = dishStatus.DishStatusName,
-
-                IngredientsId = dishIngredients.Select(x => x.IngredientId).Distinct().ToList(),
+                IngredientsId = dish.Ingredients.Select(x=>x.Id).ToList()
             };
 
-            return dishWithStatusAndCategory;
+            return getDishDto;
         }
     }
 }

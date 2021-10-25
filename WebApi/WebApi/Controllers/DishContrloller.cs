@@ -3,15 +3,19 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.DishCategories.Queries.GetCategoryByDishId;
 using Application.Dishes;
 using Application.Dishes.Commands.DeleteDish;
 using Application.Dishes.Commands.InsertDish;
 using Application.Dishes.Commands.UpdateDish;
 using Application.Dishes.Queries.GetDishById;
 using Application.Dishes.Queries.GetDishesList;
-using Application.DishStatuses.Queries.GetDishStatusById;
+using Application.Dishes.Queries.GetDishesPaged;
+using Application.DishStatuses.Queries.GetStatusByDishId;
+using Application.Ingredients.Queries.GetIngredientsByDishId;
 using Common.Dto.Dishes;
-using Domain.Entities;
+using Common.Models.PagedRequest;
+
 
 namespace WebApi.Controllers
 {
@@ -33,7 +37,7 @@ namespace WebApi.Controllers
         {
 
             var dishes = await _mediator.Send(new GetDishesListQuery());
-            var results = dishes.Select(x => _mapper.Map<DishesWithStatusesAndCategories>(x));
+            var results = dishes.Select(x => _mapper.Map<GetDishListDto>(x));
 
             return Ok(results);
         }
@@ -42,11 +46,32 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetDishById(int dishId)
         {
             var queryDish = new GetDishByIdQuery() { DishId = dishId };
-            DishWithStatusAndCategory dishWithStatus = await _mediator.Send(queryDish);
+            var dishWithStatus = await _mediator.Send(queryDish);
 
             var result = _mapper.Map<GetDishDto>(dishWithStatus);
 
             return Ok(result);
+        }
+
+        //[Authorize(Roles = "admin")]
+        [HttpPost("paginated-search")]
+        public async Task<IActionResult> GetDishesPaged([FromBody] PagedRequest pagedRequest)
+        {
+            var query = new GetDishPagedQuery() { PagedRequest = pagedRequest };
+            var dishes = await _mediator.Send(query);
+            var dishesResult = _mapper.Map<PaginatedResult<GetDishPagedDto>>(dishes);
+
+            foreach (var dish in dishesResult.Items)
+            {
+                dish.DishStatus = (await _mediator.Send(new GetStatusByDishIdQuery() { DishId = dish.Id }));
+                dish.DishCategory = (await _mediator.Send(new GetCategoryByDishIdQuery() { DishId = dish.Id }));
+                dish.Ingredients =
+                    (await _mediator.Send(new GetIngredientsByDishIdQuery() { DishId = dish.Id }))
+                    .GroupBy(x=>x.Id).Select(y=>y.FirstOrDefault()).ToList();
+            }
+
+            var a = dishesResult;
+            return Ok(a);
         }
 
         [HttpPost]

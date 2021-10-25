@@ -10,41 +10,25 @@ using Common.Dto.Ingredients;
 
 namespace Application.Ingredients.Queries.GetIngredientsList
 {
-    public class GetIngredientsListQuery : IRequest<IEnumerable<IngredientsWithStatuses>>
+    public class GetIngredientsListQuery : IRequest<IEnumerable<Ingredient>>
     {
 
     }
 
-    public class GetIngredientsListHandler : IRequestHandler<GetIngredientsListQuery, IEnumerable<IngredientsWithStatuses>>
+    public class GetIngredientsListHandler : IRequestHandler<GetIngredientsListQuery, IEnumerable<Ingredient>>
     {
         private readonly IGenericRepository<Ingredient> _ingredientsRepository;
-        private readonly IGenericRepository<IngredientStatus> _ingredientStatusesRepository;
-        public GetIngredientsListHandler(IGenericRepository<Ingredient> ingredientsRepository, IGenericRepository<IngredientStatus> ingredientStatusesRepository)
+
+        public GetIngredientsListHandler(IGenericRepository<Ingredient> ingredientsRepository)
         {
             _ingredientsRepository = ingredientsRepository;
-            _ingredientStatusesRepository = ingredientStatusesRepository;
+
         }
-        public async Task<IEnumerable<IngredientsWithStatuses>> Handle(GetIngredientsListQuery request, CancellationToken cancellationToken)
+
+        public async Task<IEnumerable<Ingredient>> Handle(GetIngredientsListQuery request,
+            CancellationToken cancellationToken)
         {
-            IEnumerable<Ingredient> ingredients = await _ingredientsRepository.GetAll();
-
-            List<IngredientsWithStatuses> ingredientsWithStatuses = new List<IngredientsWithStatuses>();
-
-            foreach (var ingredient in ingredients)
-            {
-                var ingredientStatus = await _ingredientStatusesRepository.GetById(ingredient.IngredientStatusId);
-
-                ingredientsWithStatuses.Add(new IngredientsWithStatuses()
-                {
-                    Id = ingredient.Id,
-                    IngredientName = ingredient.IngredientName,
-                    IngredientDescription = ingredient.IngredientDescription,
-                    IngredientStatusId = ingredient.IngredientStatusId,
-                    IngredientStatusName = ingredientStatus.IngredientStatusName
-                });
-            }
-
-            return ingredientsWithStatuses;
+            return await _ingredientsRepository.GetAll();
         }
     }
 }
