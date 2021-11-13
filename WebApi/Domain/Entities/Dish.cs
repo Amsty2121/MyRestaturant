@@ -11,7 +11,7 @@ namespace Domain.Entities
         public DishCategory DishCategory { get; set; }
         public int DishStatusId { get; set; }
         public DishStatus DishStatus { get; set; }
-        public ICollection<Ingredient> Ingredients { get; set; }
+        public ICollection<DishIngredient> DishIngredients { get; set; }
         public ICollection<Order> Orders { get; set; }
 
     }

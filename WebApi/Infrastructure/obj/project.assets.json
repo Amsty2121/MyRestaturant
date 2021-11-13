@@ -792,9 +792,6 @@
       "Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "Domain": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/Common.dll": {}
         },
@@ -2477,11 +2474,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\Infrastructure.csproj",
+      "projectPath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Infrastructure\\Infrastructure.csproj",
       "packagesPath": "C:\\Users\\dimASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -2504,11 +2501,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj": {
-              "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj"
+            "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Application\\Application.csproj"
             },
-            "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj": {
-              "projectPath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Common\\Common.csproj"
+            "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Common\\Common.csproj": {
+              "projectPath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Common\\Common.csproj"
             }
           }
         }

@@ -11,11 +11,12 @@ using Application.Dishes.Commands.UpdateDish;
 using Application.Dishes.Queries.GetDishById;
 using Application.Dishes.Queries.GetDishesList;
 using Application.Dishes.Queries.GetDishesPaged;
+using Application.DishStatuses.Queries.GetDishStatusById;
 using Application.DishStatuses.Queries.GetStatusByDishId;
 using Application.Ingredients.Queries.GetIngredientsByDishId;
 using Common.Dto.Dishes;
 using Common.Models.PagedRequest;
-
+using Domain.Entities;
 
 namespace WebApi.Controllers
 {
@@ -67,7 +68,7 @@ namespace WebApi.Controllers
                 dish.DishCategory = (await _mediator.Send(new GetCategoryByDishIdQuery() { DishId = dish.Id }));
                 dish.Ingredients =
                     (await _mediator.Send(new GetIngredientsByDishIdQuery() { DishId = dish.Id }))
-                    .GroupBy(x=>x.Id).Select(y=>y.FirstOrDefault()).ToList();
+                    .GroupBy(x => x.Id).Select(y => y.FirstOrDefault()).ToList();
             }
 
             var a = dishesResult;

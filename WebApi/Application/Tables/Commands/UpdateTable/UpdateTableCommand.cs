@@ -8,13 +8,13 @@ using Common.Dto.Tables;
 
 namespace Application.Tables.Commands.UpdateTable
 {
-    public class UpdateTableCommand : IRequest<TableUpdating>
+    public class UpdateTableCommand : IRequest<Table>
     {
         public int Id { get; set; }
         public UpdateTableDto Dto { get; set; }
     }
 
-    public class UpdateTableCommandHandler : IRequestHandler<UpdateTableCommand, TableUpdating>
+    public class UpdateTableCommandHandler : IRequestHandler<UpdateTableCommand, Table>
     {
         private readonly IGenericRepository<Table> _tableRepository;
         private readonly IGenericRepository<TableStatus> _tableStatusRepository;
@@ -32,7 +32,7 @@ namespace Application.Tables.Commands.UpdateTable
             _waiterRepository = waiterRepository;
         }
 
-        public async Task<TableUpdating> Handle(UpdateTableCommand request, CancellationToken cancellationToken)
+        public async Task<Table> Handle(UpdateTableCommand request, CancellationToken cancellationToken)
         {
             Table updatedTable = await _tableRepository.GetByIdWithInclude(request.Id, x => x.TableStatus,x=>x.Waiter,x=>x.Orders);
 
@@ -41,7 +41,7 @@ namespace Application.Tables.Commands.UpdateTable
                 throw new EntityDoesNotExistException("The Table does not exist");
             }
 
-            var tableStatus = await _tableStatusRepository.GetById(updatedTable.TableStatusId);
+            var tableStatus = await _tableStatusRepository.GetById(request.Dto.TableStatusId);
             if (tableStatus == null)
             { 
                 throw new EntityDoesNotExistException("The TableStatus does not exist");
@@ -50,7 +50,7 @@ namespace Application.Tables.Commands.UpdateTable
             updatedTable.TableStatusId = tableStatus.Id;
 
 
-            var waiter = await _waiterRepository.GetByIdWithInclude(updatedTable.WaiterId, x => x.UserDetails);
+            var waiter = await _waiterRepository.GetByIdWithInclude(request.Dto.WaiterId, x => x.UserDetails);
             if (waiter == null)
             {
                 throw new EntityDoesNotExistException("The Waiter does not exist");
@@ -66,17 +66,7 @@ namespace Application.Tables.Commands.UpdateTable
 
             await _tableRepository.Update(updatedTable);
 
-            var tableUpdating = new TableUpdating()
-            {
-                Id = updatedTable.Id,
-                TableDescription = updatedTable.TableDescription,
-                WaiterId = updatedTable.WaiterId,
-                WaiterName = updatedTable.Waiter.UserDetails.FirstName + " " + updatedTable.Waiter.UserDetails.LastName,
-                TableStatusId = updatedTable.TableStatusId, 
-                TableStatusName = updatedTable.TableStatus.TableStatusName
-            };
-
-            return tableUpdating;
+            return updatedTable;
         }
     }
 }

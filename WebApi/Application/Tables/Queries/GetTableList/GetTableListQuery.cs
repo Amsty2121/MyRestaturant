@@ -9,11 +9,11 @@ using Common.Dto.Tables;
 
 namespace Application.Tables.Queries.GetTableList
 {
-    public class GetTablesListQuery : IRequest<IEnumerable<TablesWithStatusesAndWaiters>>
+    public class GetTablesListQuery : IRequest<IEnumerable<Table>>
     {
     }
 
-    public class GetTableListQueryHandler : IRequestHandler<GetTablesListQuery, IEnumerable<TablesWithStatusesAndWaiters>>
+    public class GetTableListQueryHandler : IRequestHandler<GetTablesListQuery, IEnumerable<Table>>
     {
         private readonly IGenericRepository<TableStatus> _tableStatusRepository;
         private readonly IGenericRepository<Table> _tableRepository;
@@ -28,29 +28,9 @@ namespace Application.Tables.Queries.GetTableList
             _waiterRepository = waiterRepository;
         }
 
-        public async Task<IEnumerable<TablesWithStatusesAndWaiters>> Handle(GetTablesListQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Table>> Handle(GetTablesListQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<Table> tables = await _tableRepository.GetAll();
-
-            var tablesWithStatusesAndWaiters = new List<TablesWithStatusesAndWaiters>();
-
-            foreach (var table in tables)
-            {
-                var tableStatus = await _tableStatusRepository.GetById(table.TableStatusId);
-                var waiter = await _waiterRepository.GetByIdWithInclude(table.WaiterId,x=> x.UserDetails);
-
-                tablesWithStatusesAndWaiters.Add(new TablesWithStatusesAndWaiters()
-                {
-                    Id = table.Id,
-                    TableDescription = table.TableDescription,
-                    TableStatusId = tableStatus.Id,
-                    TableStatusName = tableStatus.TableStatusName,
-                    WaiterId = waiter.Id,
-                    WaiterName = waiter.UserDetails.FirstName + " " + waiter.UserDetails.LastName
-                });
-            }
-
-            return tablesWithStatusesAndWaiters;
+            return await _tableRepository.GetAllWithInclude(x=>x.TableStatus,x=>x.Waiter);
         }
     }
 }

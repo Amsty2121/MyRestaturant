@@ -1,4 +1,4 @@
-﻿    using Application.Users.Queries.UsernameAlreadyExists;
+﻿using Application.Users.Queries.UsernameAlreadyExists;
 using Common.Dto.User;
 using Domain.Entities.Authorization;
 using MediatR;

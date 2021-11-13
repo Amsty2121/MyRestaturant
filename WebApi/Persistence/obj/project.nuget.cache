@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1uEV6GlnT1MKwGhjdAiQwMPMtnrXJCruChKjKJUfEYJuhG3OdHN5YVKwarKF5u8e8XuEMARjWN13pnZ4nm43pw==",
+  "dgSpecHash": "iy5k1L0iA/ZDkzehV0AU9jMEHMtZXsp3MIt5H5NxUmHtoypDwGQOEtHaE6GFSxp4OAvVM/mSWfLHKdD3GoEe6g==",
   "success": true,
-  "projectFilePath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Persistence\\Persistence.csproj",
+  "projectFilePath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Persistence\\Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimASUS\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",

@@ -3,12 +3,25 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.Dishes.Queries.GetDishByOrderId;
+using Application.Dishes.Queries.GetDishesByTableId;
+using Application.Kitcheners.Queries.GetKitchenerByOrderId;
+using Application.Orders.Queries.GetOrdersByTableId;
+using Application.Orders.Queries.GetOrdersPaged;
+using Application.OrderStatuses.Queries.GetStatusByOrderId;
 using Application.Tables.Commands.DeleteTable;
 using Application.Tables.Commands.InsertTable;
 using Application.Tables.Commands.UpdateTable;
 using Application.Tables.Queries.GetTableById;
+using Application.Tables.Queries.GetTableByOrderId;
 using Application.Tables.Queries.GetTableList;
+using Application.Tables.Queries.GetTablesPaged;
+using Application.TableStatuses.Queries.GetStatusByTableId;
+using Application.Waiters.Queries.GetWaiterByOrderId;
+using Application.Waiters.Queries.GetWaiterByTableId;
 using Common.Dto.Tables;
+using Common.Models.PagedRequest;
+using Domain.Entities;
 
 namespace WebApi.Controllers
 {
@@ -30,7 +43,7 @@ namespace WebApi.Controllers
         {
 
             var tables = await _mediator.Send(new GetTablesListQuery());
-            var results = tables.Select(x => _mapper.Map<TablesWithStatusesAndWaiters>(x));
+            var results = tables.Select(x => _mapper.Map<GetTableListDto>(x));
 
             return Ok(results);
         }
@@ -39,11 +52,29 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetTableById(int tableId)
         {
             var queryTable = new GetTableByIdQuery() { TableId = tableId };
-            TableWithStatusWaiterAndOrders tableWithStatusWaiterAndOrders = await _mediator.Send(queryTable);
+            var table = await _mediator.Send(queryTable);
 
-            var result = _mapper.Map<GetTableDto>(tableWithStatusWaiterAndOrders);
+            var result = _mapper.Map<GetTableDto>(table);
 
             return Ok(result);
+        }
+
+        //[Authorize(Roles = "admin")]
+        [HttpPost("paginated-search")]
+        public async Task<IActionResult> GetTablesPaged([FromBody] PagedRequest pagedRequest)
+        {
+            var query = new GetTablePagedQuery() { PagedRequest = pagedRequest };
+            var tables = await _mediator.Send(query);
+            var tablesResult = _mapper.Map<PaginatedResult<GetTablePagedDto>>(tables);
+
+            foreach (var table in tablesResult.Items)
+            {
+                table.TableStatus = (await _mediator.Send(new GetStatusByTableIdQuery() { TableId = table.Id }));
+                table.Waiter = (await _mediator.Send(new GetWaiterByTableIdQuery() { TableId = table.Id }));
+            }
+
+            var a = tablesResult;
+            return Ok(a);
         }
 
         [HttpPost]

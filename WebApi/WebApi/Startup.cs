@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Persistence.UnitsOfWork;
 using System;
 using System.Reflection;
 using Common.Dto.Ingredients;
@@ -73,6 +74,8 @@ namespace WebApi
                     "Persist Security Info=False;Integrated Security=true;Initial Catalog=MyRestaurant;Server=DESKTOP-1P5LPV2"));
             */
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            
+            services.AddScoped(typeof(IDishUnitOfWork), typeof(DishUnitOfWork));
 
             services.AddControllers();
             

@@ -18,17 +18,15 @@ namespace Application.Ingredients.Queries.GetIngredientsList
     public class GetIngredientsListHandler : IRequestHandler<GetIngredientsListQuery, IEnumerable<Ingredient>>
     {
         private readonly IGenericRepository<Ingredient> _ingredientsRepository;
-
-        public GetIngredientsListHandler(IGenericRepository<Ingredient> ingredientsRepository)
+        public GetIngredientsListHandler(IGenericRepository<Ingredient> ingredientsRepository, IGenericRepository<IngredientStatus> ingredientStatusesRepository)
         {
             _ingredientsRepository = ingredientsRepository;
-
         }
-
-        public async Task<IEnumerable<Ingredient>> Handle(GetIngredientsListQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IEnumerable<Ingredient>> Handle(GetIngredientsListQuery request, CancellationToken cancellationToken)
         {
-            return await _ingredientsRepository.GetAll();
+            return await _ingredientsRepository.GetAllWithInclude(x=>x.IngredientStatus);
+
+            
         }
     }
 }

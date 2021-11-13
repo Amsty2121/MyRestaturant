@@ -35,8 +35,8 @@ namespace Persistence
 			entity.CreatedDateTime = DateTime.Now;
 			entity.ModifiedDateTime = DateTime.Now;
 			await _context.Set<T>().AddAsync(entity);
-			await _context.SaveChangesAsync();
-		}
+            await _context.SaveChangesAsync();
+        }
 
 		public Task Update(T entity)
 		{

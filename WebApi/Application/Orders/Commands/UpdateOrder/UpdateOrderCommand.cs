@@ -22,18 +22,21 @@ namespace Application.Orders.Commands.UpdateOrder
         private readonly IGenericRepository<OrderStatus> _orderStatusRepository;
         private readonly IGenericRepository<Table> _tableRepository;
         private readonly IGenericRepository<Waiter> _waiterRepository;
+        private readonly IGenericRepository<Kitchener> _kitchenerRepository;
 
         public UpdateOrderCommandHandler(IGenericRepository<Dish> dishRepository,
                                          IGenericRepository<Order> orderRepository,
                                          IGenericRepository<OrderStatus> orderStatusRepository,
                                          IGenericRepository<Table> tableRepository,
-                                         IGenericRepository<Waiter> waiterRepository)
+                                         IGenericRepository<Waiter> waiterRepository,
+                                         IGenericRepository<Kitchener> kitchenerRepository)
         {
             _dishRepository = dishRepository;
             _orderRepository = orderRepository;
             _orderStatusRepository = orderStatusRepository;
             _tableRepository = tableRepository;
             _waiterRepository = waiterRepository;
+            _kitchenerRepository = kitchenerRepository;
         }
 
         public async Task<OrderUpdating> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
@@ -79,6 +82,27 @@ namespace Application.Orders.Commands.UpdateOrder
             updatedOrder.OrderDescription = request.Dto.OrderDescription;
             updatedOrder.OrderNrPortions = request.Dto.OrderNrPortions;
 
+
+            string kitchenerName = "not assigned";
+            if (request.Dto.KitchenerId != null)
+            {
+                Kitchener kitchener = await _kitchenerRepository.GetByIdWithInclude(request.Dto.KitchenerId.Value, x => x.UserDetails);
+                if (kitchener == null)
+                {
+                    throw new EntityDoesNotExistException("The Kitchener does not exist");
+                }
+
+                kitchenerName = kitchener.UserDetails.FirstName + " " + kitchener.UserDetails.LastName;
+                updatedOrder.KitchenerId = kitchener.Id;
+                updatedOrder.Kitchener = kitchener;
+            }
+            else
+            {
+                updatedOrder.KitchenerId = null;
+                updatedOrder.Kitchener = null;
+            }
+            
+            
             await _orderRepository.Update(updatedOrder);
 
             var orderUpdating = new OrderUpdating()
@@ -93,6 +117,9 @@ namespace Application.Orders.Commands.UpdateOrder
                 OrderStatusName = updatedOrder.OrderStatus.OrderStatusName,
                 DishId = updatedOrder.Dish.Id,
                 DishName = updatedOrder.Dish.DishName,
+                KitchenerId = request.Dto.KitchenerId,
+                KitchenerName = kitchenerName
+                
 
             };
 

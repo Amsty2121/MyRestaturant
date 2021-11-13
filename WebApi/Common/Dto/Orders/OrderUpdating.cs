@@ -18,5 +18,7 @@ namespace Common.Dto.Orders
         public string OrderStatusName { get; set; }
         public int DishId { get; set; }
         public string DishName { get; set; }
+        public int? KitchenerId { get; set; }
+        public string KitchenerName { get; set; }
     }
 }

@@ -289,6 +289,38 @@ namespace Persistence.Migrations
                     b.ToTable("DishCategories");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DishIngredient", b =>
+                {
+                    b.Property<int>("DishId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DishIngredientDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("DishId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("DishIngredients");
+                });
+
             modelBuilder.Entity("Domain.Entities.DishStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -325,9 +357,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DishId")
-                        .HasColumnType("int");
-
                     b.Property<string>("IngredientDescription")
                         .HasMaxLength(500)
                         .IsUnicode(true)
@@ -351,8 +380,6 @@ namespace Persistence.Migrations
                         .HasColumnType("rowversion");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DishId");
 
                     b.HasIndex("IngredientStatusId");
 
@@ -695,12 +722,27 @@ namespace Persistence.Migrations
                     b.Navigation("DishStatus");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DishIngredient", b =>
+                {
+                    b.HasOne("Domain.Entities.Dish", "Dish")
+                        .WithMany("DishIngredients")
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Ingredient", "Ingredient")
+                        .WithMany("DishIngredients")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dish");
+
+                    b.Navigation("Ingredient");
+                });
+
             modelBuilder.Entity("Domain.Entities.Ingredient", b =>
                 {
-                    b.HasOne("Domain.Entities.Dish", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("DishId");
-
                     b.HasOne("Domain.Entities.IngredientStatus", "IngredientStatus")
                         .WithMany("Ingredients")
                         .HasForeignKey("IngredientStatusId")
@@ -802,7 +844,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Dish", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.Navigation("DishIngredients");
 
                     b.Navigation("Orders");
                 });
@@ -815,6 +857,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DishStatus", b =>
                 {
                     b.Navigation("Dishes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Ingredient", b =>
+                {
+                    b.Navigation("DishIngredients");
                 });
 
             modelBuilder.Entity("Domain.Entities.IngredientStatus", b =>

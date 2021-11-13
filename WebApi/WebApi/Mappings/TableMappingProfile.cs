@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Tables.Queries.GetTablesPaged;
+using AutoMapper;
 using Common.Dto.Tables;
+using Common.Models.PagedRequest;
 using Domain.Entities;
 
 namespace WebApi.Mappings
@@ -8,13 +10,19 @@ namespace WebApi.Mappings
     {
         public TableMappingProfile()
         {
-            CreateMap<TablesWithStatusesAndWaiters, GetTableListDto>();
+            CreateMap<Table, GetTableListDto>();
             CreateMap<Table, GetTableDto>();
-            CreateMap<TableWithStatusWaiterAndOrders, GetTableDto>();
             CreateMap<Table, InsertedTableDto>();
             CreateMap<Table, InsertTableDto>();
-            CreateMap<TableUpdating, UpdatedTableDto>();
+            CreateMap<Table, UpdatedTableDto>();
             CreateMap<Table, UpdateTableDto>();
+
+            CreateMap<Table, GetTablePagedDto>();
+            CreateMap<PaginatedResult<Table>, PaginatedResult<GetTablePagedDto>>()
+                .ForMember(x => x.Items,
+                    y => y.MapFrom(z => z.Items));
+
+
         }
 
     }

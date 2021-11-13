@@ -11,9 +11,7 @@ using Application.Ingredients.Queries.GetIngredientPaged;
 using Application.Ingredients.Queries.GetIngredientsList;
 using Application.IngredientStatuses.Queries.GetStatusByIngredientId;
 using Common.Dto.Ingredients;
-using Common.Dto.IngredientStatuses;
 using Common.Models.PagedRequest;
-using Domain.Entities;
 
 namespace WebApi.Controllers
 {
@@ -61,7 +59,7 @@ namespace WebApi.Controllers
 
             foreach (var ingredient in ingredientsResult.Items)
             {
-                ingredient.IngredientStatus = (await _mediator.Send(new GetStatusByIngredientIdQuery() { IngredientId = ingredient.Id}));
+                ingredient.IngredientStatus = (await _mediator.Send(new GetStatusByIngredientIdQuery() { IngredientId = ingredient.Id }));
             }
 
             return Ok(ingredientsResult);

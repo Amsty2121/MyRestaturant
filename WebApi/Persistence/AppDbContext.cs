@@ -38,6 +38,7 @@ namespace Persistence
         public DbSet<DishStatus> DishStatuses { get; set; }
         public DbSet<DishCategory> DishCategories { get; set; }
         public DbSet<Dish> Dishes { get; set; }
+        public DbSet<DishIngredient> DishIngredients { get; set; }
 
         private void ApplyIdentityMapConfiguration(ModelBuilder modelBuilder)
         {

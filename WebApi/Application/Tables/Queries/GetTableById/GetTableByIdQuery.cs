@@ -13,12 +13,12 @@ using Common.Dto.Tables;
 namespace Application.Tables.Queries.GetTableById
 {
     
-    public class GetTableByIdQuery : IRequest<TableWithStatusWaiterAndOrders>
+    public class GetTableByIdQuery : IRequest<GetTableDto>
     {
         public int TableId { get; set; }
     }
 
-    class GetTableByIdQueryHandler : IRequestHandler<GetTableByIdQuery, TableWithStatusWaiterAndOrders>
+    class GetTableByIdQueryHandler : IRequestHandler<GetTableByIdQuery, GetTableDto>
     {
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<TableStatus> _tableStatusRepository;
@@ -37,7 +37,7 @@ namespace Application.Tables.Queries.GetTableById
             _waiterRepository = waiterRepository;
         }
 
-        public async Task<TableWithStatusWaiterAndOrders> Handle(GetTableByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetTableDto> Handle(GetTableByIdQuery request, CancellationToken cancellationToken)
         {
             Table table = await _tableRepository.GetByIdWithInclude(request.TableId, x => x.Orders,x=>x.TableStatus,x=>x.Waiter);
 
@@ -52,7 +52,7 @@ namespace Application.Tables.Queries.GetTableById
 
 
 
-            var tableWithStatusWaiterAndOrders = new TableWithStatusWaiterAndOrders()
+            var getTableDto = new GetTableDto()
             {
                 Id = table.Id,
                 TableDescription = table.TableDescription,
@@ -64,7 +64,7 @@ namespace Application.Tables.Queries.GetTableById
                 OrdersId = orders.Select(x=>x.TableId).Distinct().ToList()
             };
 
-            return tableWithStatusWaiterAndOrders;
+            return getTableDto;
         }
     }
 }

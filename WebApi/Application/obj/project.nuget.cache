@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "X1PderN/Kk+Y1ZJEzbe+7/BqB6/9b6CXiu82sUkFcspPDcf1X7LS5XjgnyxRKo53C56R5tuAlK97B+gOK6Uqdw==",
+  "dgSpecHash": "xZ8eO6ANWC2KsSTh+4uD9vYvJ5vhtRfO/HFqxvlOefLDQ4QyXzOlfVpJ6zB+6PpDRmnjoIaq1FgOdtquTMPOAw==",
   "success": true,
-  "projectFilePath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimASUS\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",

@@ -16,25 +16,28 @@ namespace Application.Ingredients.Queries.GetIngredientsByDishId
     public class GetIngredientsByDishIdQueryHandler : IRequestHandler<GetIngredientsByDishIdQuery, ICollection<GetIngredientDto>>
     {
         private readonly IGenericRepository<Dish> _dishRepository;
+        private readonly IGenericRepository<DishIngredient> _dishIngredientRepository;
         private readonly IGenericRepository<Ingredient> _ingredientRepository;
 
         public GetIngredientsByDishIdQueryHandler(IGenericRepository<Dish> dishRepository,
+                                                  IGenericRepository<DishIngredient> dishIngredientRepository,
                                                   IGenericRepository<Ingredient> ingredientRepository)
         {
             _dishRepository = dishRepository;
+            _dishIngredientRepository = dishIngredientRepository;
             _ingredientRepository = ingredientRepository;
         }
 
         public async Task<ICollection<GetIngredientDto>> Handle(GetIngredientsByDishIdQuery request,
             CancellationToken cancellationToken)
         {
-            var dishes = await _dishRepository.GetByIdWithInclude(request.DishId,x=>x.Ingredients);
+            var dishes = await _dishRepository.GetByIdWithInclude(request.DishId,x=>x.DishIngredients);
 
             ICollection<GetIngredientDto> result = new List<GetIngredientDto>();
 
-            foreach (var ingredient in dishes.Ingredients)
+            foreach (var ingredient in dishes.DishIngredients)
             {
-                var ingr = await _ingredientRepository.GetByIdWithInclude(ingredient.Id, x => x.IngredientStatus);
+                var ingr = await _ingredientRepository.GetByIdWithInclude(ingredient.IngredientId, x => x.IngredientStatus);
                 var mappedIngredient = new GetIngredientDto()
                 {
                     Id = ingr.Id,
