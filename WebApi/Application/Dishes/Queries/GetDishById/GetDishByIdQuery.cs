@@ -34,7 +34,7 @@ namespace Application.Dishes.Queries.GetDishById
         }
         public async Task<GetDishDto> Handle(GetDishByIdQuery request, CancellationToken cancellationToken)
         {
-            Dish dish = await _dishRepository.GetByIdWithInclude(request.DishId, x => x.DishIngredients);
+            Dish dish = await _dishRepository.GetByIdWithInclude(request.DishId, x => x.DishIngredients, x => x.DishCategory, x => x.DishStatus);
             if (dish == null)
             {
                 throw new EntityDoesNotExistException("The Dish does not exist");

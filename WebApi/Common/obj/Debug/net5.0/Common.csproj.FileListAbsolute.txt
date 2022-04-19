@@ -22,15 +22,6 @@ D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.Co
 D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.dll
 D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\ref\Common.dll
 D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.pdb
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.deps.json
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.dll
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\bin\Debug\net5.0\ref\Common.dll
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Common.pdb
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.AssemblyReference.cache
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.GeneratedMSBuildEditorConfig.editorconfig
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.AssemblyInfoInputs.cache
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.AssemblyInfo.cs
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.CoreCompileInputs.cache
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.dll
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\ref\Common.dll
-D:\Amdaris\Новая папка\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.pdb
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Domain.dll
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\bin\Debug\net5.0\Domain.pdb
+D:\Amdaris\Project\MyRestaturant\WebApi\Common\obj\Debug\net5.0\Common.csproj.CopyComplete

@@ -18,10 +18,12 @@ namespace Application.IngredientStatuses.Queries.GetStatusByIngredientId
 
     public class GetIngredientStatusByIdQueryHandler : IRequestHandler<GetStatusByIngredientIdQuery, IngredientStatus>
     {
+        private readonly IGenericRepository<IngredientStatus> _ingredientStatusRepository;
         private readonly IGenericRepository<Ingredient> _ingredientRepository;
 
-        public GetIngredientStatusByIdQueryHandler(IGenericRepository<Ingredient> ingredientRepository)
+        public GetIngredientStatusByIdQueryHandler(IGenericRepository<IngredientStatus> ingredientStatusRepository, IGenericRepository<Ingredient> ingredientRepository)
         {
+            _ingredientStatusRepository = ingredientStatusRepository; 
             _ingredientRepository = ingredientRepository;
         }
 

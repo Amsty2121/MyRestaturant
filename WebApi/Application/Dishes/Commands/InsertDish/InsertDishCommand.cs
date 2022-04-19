@@ -20,7 +20,7 @@ namespace Application.Dishes.Commands.InsertDish
         private readonly IGenericRepository<Ingredient> _ingredientRepository;
         private readonly IGenericRepository<DishStatus> _dishStatusRepository;
         private readonly IGenericRepository<DishCategory> _dishCategoryRepository;
-        public InsertDishCommandHandler(IGenericRepository<Dish> dishRepository, 
+        public InsertDishCommandHandler(IGenericRepository<Dish> dishRepository,
                                         IGenericRepository<Ingredient> ingredientRepository,
                                         IGenericRepository<DishStatus> dishStatusRepository,
                                         IGenericRepository<DishCategory> dishCategoryRepository)
@@ -41,7 +41,7 @@ namespace Application.Dishes.Commands.InsertDish
             }
 
             DishStatus dishStatus = await _dishStatusRepository.GetById(request.Dto.DishStatusId);
-            
+
             if (dishStatus == null)
             {
                 throw new EntityDoesNotExistException("This DishStatus does not exist");
@@ -55,7 +55,7 @@ namespace Application.Dishes.Commands.InsertDish
             }
 
             ICollection<Ingredient> ingredients = new List<Ingredient>();
-            
+
             foreach (var id in request.Dto.IngredientsId)
             {
                 var newIngredient = await _ingredientRepository.GetById(id);
@@ -79,9 +79,9 @@ namespace Application.Dishes.Commands.InsertDish
             {
                 DishName = request.Dto.DishName,
                 DishDescription = request.Dto.DishDescription,
-                DishStatus = dishStatus,
+                DishStatusId = request.Dto.DishStatusId,
                 DishPrice = request.Dto.DishPrice,
-                DishCategory = dishCategory,
+                DishCategoryId = request.Dto.DishCategoryId,
                 DishIngredients = dishIngredients
             };
 

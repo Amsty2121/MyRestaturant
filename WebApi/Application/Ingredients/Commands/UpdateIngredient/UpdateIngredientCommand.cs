@@ -29,9 +29,7 @@ namespace Application.Ingredients.Commands.UpdateIngredient
             CancellationToken cancellationToken)
         {
             Ingredient updatedIngredient =
-                await _ingredientRepository.GetByIdWithInclude(request.Id, x => x.IngredientStatus,
-                    x => x.DishIngredients);
-
+                await _ingredientRepository.GetById(request.Id);
             if (updatedIngredient == null)
             {
                 throw new EntityDoesNotExistException("The Ingredient does not exist");

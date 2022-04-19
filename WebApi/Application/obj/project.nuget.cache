@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xZ8eO6ANWC2KsSTh+4uD9vYvJ5vhtRfO/HFqxvlOefLDQ4QyXzOlfVpJ6zB+6PpDRmnjoIaq1FgOdtquTMPOAw==",
+  "dgSpecHash": "93vNOdRbmFSGm/qF3m+hMURrCcGusI+Id/1MuVQpUWWk91AgRg9pVYaniplhaqRPw+4R9N5nBedxBjd6GRI2LQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Application\\Application.csproj",
+  "projectFilePath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimASUS\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
@@ -61,7 +61,10 @@
     "C:\\Users\\dimASUS\\.nuget\\packages\\system.text.encodings.web\\4.7.2\\system.text.encodings.web.4.7.2.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\system.text.json\\4.6.0\\system.text.json.4.6.0.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
-    "C:\\Users\\dimASUS\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
+    "C:\\Users\\dimASUS\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

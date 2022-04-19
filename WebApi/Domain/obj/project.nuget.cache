@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wiu5t9++aq8U6Zce6MSTNDeLP3b32ShQaaK9G8m2jOb16uA7J9UE85ldmNixmdjqEviYpY9018+22b6f4OuhIQ==",
+  "dgSpecHash": "F3zm49yw70hGxKm0nuwrx+ijhJYaa5YwBIwMFsNz2J2Ccfl+pQijuFZt6yY+CmA3tDk0yiFTzxa5TijKQrKQHA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dimASUS\\Desktop\\Project\\WebApi\\Domain\\Domain.csproj",
+  "projectFilePath": "D:\\Amdaris\\Project\\MyRestaturant\\WebApi\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.10\\microsoft.aspnetcore.cryptography.internal.5.0.10.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.10\\microsoft.aspnetcore.cryptography.keyderivation.5.0.10.nupkg.sha512",
@@ -24,7 +24,10 @@
     "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512",
     "C:\\Users\\dimASUS\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
-    "C:\\Users\\dimASUS\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.1\\system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512"
+    "C:\\Users\\dimASUS\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.1\\system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\dimASUS\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -9,39 +9,24 @@ using MediatR;
 
 namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
 {
-    public class AssignedKitchenerToDishOrder
-    {
-        public int Id { get; set; }
-        public int OrderNrPortions { get; set; }
-        public string OrderDescription { get; set; }
-        public int WaiterId { get; set; }
-        public string WaiterName { get; set; }
-        public int TableId { get; set; }
-        public int OrderStatusId { get; set; }
-        public string OrderStatusName { get; set; }
-        public int DishId { get; set; }
-        public string DishName { get; set; }
-        public int KitchenerId { get; set; }
-        public string KitchenerName { get; set; }
-
-
-    }
-    public class AssignKitchenerToDIshOrderCommand : IRequest<AssignedKitchenerToDishOrder>
+    public class AssignKitchenerToDIshOrderCommand : IRequest<AssignedKitchenerToDIshOrderDto>
     {
         public int OrderId { get; set; }
         public AssignKitchenerToDIshOrderDto Dto { get; set; }
     }
 
-    public class AssignKitchenerToDIshOrderCommandHandler : IRequestHandler<AssignKitchenerToDIshOrderCommand, AssignedKitchenerToDishOrder>
+    public class AssignKitchenerToDIshOrderCommandHandler : IRequestHandler<AssignKitchenerToDIshOrderCommand, AssignedKitchenerToDIshOrderDto>
     {
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<Dish> _dishRepository;
+        private readonly IGenericRepository<DishOrder> _dishOrderRepository;
         private readonly IGenericRepository<OrderStatus> _orderStatusRepository;
         private readonly IGenericRepository<Table> _tableRepository;
         private readonly IGenericRepository<Waiter> _waiterRepository;
         private readonly IGenericRepository<Kitchener> _kitchenerRepository;
 
         public AssignKitchenerToDIshOrderCommandHandler(IGenericRepository<Dish> dishRepository,
+                                         IGenericRepository<DishOrder> dishOrderRepository,
                                          IGenericRepository<Order> orderRepository,
                                          IGenericRepository<OrderStatus> orderStatusRepository,
                                          IGenericRepository<Table> tableRepository,
@@ -49,6 +34,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
                                          IGenericRepository<Kitchener> kitchenerRepository)
         {
             _dishRepository = dishRepository;
+            _dishOrderRepository = dishOrderRepository;
             _orderRepository = orderRepository;
             _orderStatusRepository = orderStatusRepository;
             _tableRepository = tableRepository;
@@ -56,7 +42,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
             _kitchenerRepository = kitchenerRepository;
         }
 
-        public async Task<AssignedKitchenerToDishOrder> Handle(AssignKitchenerToDIshOrderCommand request, CancellationToken cancellationToken)
+        public async Task<AssignedKitchenerToDIshOrderDto> Handle(AssignKitchenerToDIshOrderCommand request, CancellationToken cancellationToken)
         {
             Kitchener kitchener = await _kitchenerRepository.GetByIdWithInclude(request.Dto.KitchenerId,x=>x.UserDetails);
             if (kitchener == null)
@@ -64,7 +50,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
                 throw new EntityDoesNotExistException("The kitchener does not exist");
             }
 
-            Order updatedOrder = await _orderRepository.GetById(request.OrderId);
+            Order updatedOrder = await _orderRepository.GetByIdWithInclude(request.OrderId,x=>x.DishOrder,x=>x.OrderStatus,x=>x.Table);
             if (updatedOrder == null)
             {
                 throw new EntityDoesNotExistException("The Order does not exist");
@@ -80,10 +66,12 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
             updatedOrder.OrderStatusId = orderStatus.Id;
             updatedOrder.OrderStatus = orderStatus;
 
-            Dish dish = await _dishRepository.GetById(updatedOrder.DishId);
+            Dish dish = await _dishRepository.GetById(updatedOrder.DishOrder.DishId);
 
-            updatedOrder.DishId = dish.Id;
-            updatedOrder.Dish = dish;
+            DishOrder dishOrder =
+                (await _dishOrderRepository.GetWhere(x => x.OrderId == updatedOrder.Id && x.DishId == dish.Id)).Single();
+
+            updatedOrder.DishOrder = dishOrder;
 
             Waiter waiter = await _waiterRepository.GetByIdWithInclude(table.WaiterId, x => x.UserDetails);
 
@@ -92,7 +80,7 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
 
             await _orderRepository.Update(updatedOrder);
 
-            var assignedKitchenerToDishOrder = new AssignedKitchenerToDishOrder()
+            var assignedKitchenerToDishOrder = new AssignedKitchenerToDIshOrderDto()
             {
                 Id = updatedOrder.Id,
                 OrderNrPortions = updatedOrder.OrderNrPortions,
@@ -102,8 +90,8 @@ namespace Application.Kitcheners.Commands.AssignKitchenerToDIshOrder
                 TableId = updatedOrder.TableId,
                 OrderStatusId = updatedOrder.OrderStatusId,
                 OrderStatusName = updatedOrder.OrderStatus.OrderStatusName,
-                DishId = updatedOrder.Dish.Id,
-                DishName = updatedOrder.Dish.DishName,
+                DishId = dish.Id,
+                DishName = dish.DishName,
                 KitchenerId = kitchener.Id,
                 KitchenerName = kitchener.UserDetails.FirstName + " " + kitchener.UserDetails.LastName,
             };

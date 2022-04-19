@@ -34,14 +34,20 @@ namespace Application.Ingredients.Queries.GetIngredientById
             }
 
             IngredientStatus ingredientStatus = await _ingredientStatusRepository.GetById(ingredient.IngredientStatusId);
+            
+            if (ingredientStatus == null)
+            {
+                throw new EntityDoesNotExistException("The IngredientStatus does not exist");
+            }
 
-            var getIngredientDto = new GetIngredientDto()
+            GetIngredientDto getIngredientDto = new GetIngredientDto()
             {
                 Id = ingredient.Id,
                 IngredientName = ingredient.IngredientName,
                 IngredientDescription = ingredient.IngredientDescription,
-                IngredientStatusId = ingredient.IngredientStatusId,
+                IngredientStatusId = ingredientStatus.Id,
                 IngredientStatusName = ingredientStatus.IngredientStatusName
+
             };
 
             return getIngredientDto;
